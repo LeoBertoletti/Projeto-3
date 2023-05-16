@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client"
 import express from 'express'
+import axios from 'axios'
 
 const app = express()
 const prisma = new PrismaClient()
@@ -18,9 +19,12 @@ app.post('/', async (req, res) => {
             //author: { connect: { email: authorEmail } },
         },
     })
-    post
-    res.json('post')
+    res.json('posted')
     contador++
+})
+
+app.delete('/', async (req, res) => {
+
 })
 
 app.listen(port, () => {
