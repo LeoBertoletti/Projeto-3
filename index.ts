@@ -7,15 +7,11 @@ const prisma = new PrismaClient()
 const port = 3000
 var contador = 0
 
-app.get('/', async (req, res) => {
-    const crewList = await prisma.crews.findMany()
-    res.json(crewList)
-})
-
-app.post('/', async (req, res) => {
+//Create
+app.get('/create/', async (req, res) => {
     const post = await prisma.crews.create({
         data: {
-            ship: `teste${contador}`
+            ship: `teste`
             //author: { connect: { email: authorEmail } },
         },
     })
@@ -23,8 +19,31 @@ app.post('/', async (req, res) => {
     contador++
 })
 
-app.delete('/', async (req, res) => {
+//Read
+app.get('/read/', async (req, res) => {
+    const crewList = await prisma.crews.findMany()
+    res.json(crewList)
+})
 
+//Update
+app.patch('/update/:id/:field/:newValue', async (req, res) => {
+    const teste = req.params.field
+    const update = await prisma.crews.update({
+        where: {
+            id: req.params.id
+        },
+        data: {
+            req.params.field: String(req.params.newValue)
+},
+    })
+})
+
+//Delete
+app.get('/delete/:id', async (req, res) => {
+    const deleteId = await prisma.crews.delete({
+        where: { id: req.params.id },
+    })
+    res.send("id " + req.params.id + " deleted");
 })
 
 app.listen(port, () => {
