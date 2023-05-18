@@ -1,11 +1,9 @@
 import { PrismaClient } from "@prisma/client"
 import express from 'express'
-import axios from 'axios'
 
 const app = express()
 const prisma = new PrismaClient()
 const port = 3000
-var contador = 0
 
 //Create
 app.get('/create/', async (req, res) => {
@@ -15,9 +13,9 @@ app.get('/create/', async (req, res) => {
             //author: { connect: { email: authorEmail } },
         },
     })
-    res.json('posted')
-    contador++
+    res.send('posted')
 })
+
 
 //Read
 app.get('/read/', async (req, res) => {
@@ -26,17 +24,17 @@ app.get('/read/', async (req, res) => {
 })
 
 //Update
-app.patch('/update/:id/:field/:newValue', async (req, res) => {
-    const teste = req.params.field
-    const update = await prisma.crews.update({
-        where: {
-            id: req.params.id
-        },
-        data: {
-            req.params.field: String(req.params.newValue)
-},
-    })
-})
+//app.patch('/update/:id/:field/:newValue', async (req, res) => {
+//    const teste = req.params.field
+//    const update = await prisma.crews.update({
+//        where: {
+//            id: req.params.id
+//        },
+//        data: {
+//            req.params.field: String(req.params.newValue)
+//},
+//    })
+//})
 
 //Delete
 app.get('/delete/:id', async (req, res) => {
